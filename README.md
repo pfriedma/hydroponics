@@ -9,12 +9,53 @@ The system I ended up building is a hybrid "continuous flow" and "ebb/flow" syst
 
 I opted for this model to support growing root veggies like carrots. 
 
+## Construction
+### Overview
+You have a reservoir which will hold the nutrient solution. A pump pulls the solution and delivers it to the top most container. Solution flows through the containers and drains back into the reservoir.
+
+When flowing horizontally, be aware of height, you'll want to slightly elevate the "upstream" container or else the solution won't flow properly. 
+### Materials
+* Plastic containers (ideally opaque to prevent algae growth) which will be the planters, and a larger one for the reservoir
+* Lids for the containers
+* Vinyl tubing
+* Hose connectors (see 3d files)
+* Aeration pump
+* Fluid pump (immersible) 
+* Nutrient solution (I've been using General Hydroponics Flora Series)
+* Hydroponic Expanded clay pebbles or other substrate of your choice
+* Hydroponic baskets (to hold the pebbles and plants)
+* LED Grow lights (I chose yellow/white color ones for aesthetics)
+* Marine adhesive for waterproofing and securing the connectors
+### Steps
+1. Print connectors (optional)
+1. Drill or melt holes in containers (for the hose connectors) and lids (for the plant baskets). You'll want about 6-8cm clearance between baskets, depending on basket size and the plants you intend to grow.
+1. Insert baskets into holes
+1. Put a bead of adhesive on flange, insert connector, bead the screw-on flange, and screw on (screw goes on outside of container)
+1. Arrange containers as needed
+1. For containers that drain vertically (down), you'll want to cut a bit of tubing to put on the inside of the container to ensure the fluid level is just touching the bottom of the baskets
+1. Hook up the tubing
+1. Place pump in reservoir, connect, fill reservoir with water and test. Depending on your setup, you'll want to adjust the pump runtime per cycle (`PUMP_PULSE_LENGTH`) in `src/constants_and_pins.h` 
+1. Transplant plants into baskets, covering with washed clay pebbles. 
+1. Follow nutrient manufacturer's guides
 
 ## Repository Structure
 ### 3d files
-This dir contains an OpenSCAD file which can generate STL files for the various types of hose connectors used. There is a function which will also generate bulkhead connectors with a thrededed washer. 
+This dir contains an OpenSCAD file which can generate STL files for the various types of hose connectors used. There is a function which will also generate bulkhead connectors with a threaded washer. 
 
-It will also contain STL files for e.g. the housings for the arduino. 
+3d printing may be much less expensive for you, as hardware stores sell the connectors for about $5-8 each!
+
+You'll want to experiment with your print settings to achieve a water-tight print. I found with my Ender3, a 150% extrusion at .16 layer-height, solid infill was decent. You'll likely have to do some tests.
+
+The two functions you probably care about are 
+> print_connector_part(num=2, flanged=true);
+
+and
+
+>print_flange_screw();
+
+Specify the diameter of your tubing (OD) , and print away! The default OD in the OpenSCAD file is 16.25mm.
+
+
 
 ### src
 This directory contains the Arduino source for the control system. This was implemented on a MKR WIFI1010 and relies on Wifi and NTP to work correctly. HOWEVER, you can use a much simpler device as long as it has a reasonably reliable clock. You'll just need to add code and a user interface for setting the time. 

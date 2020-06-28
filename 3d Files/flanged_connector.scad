@@ -104,7 +104,7 @@ module print_flange_screw()
     difference(){
         cylinder(r=IR*4, h=flange_height*2, center=true);
        translate([0,0,-flange_height*2+1])
-        metric_thread(OD,1,flange_height*3, internal=true);
+        metric_thread(OD+.5,1,flange_height*3, internal=true);
     }
     
 }
