@@ -20,13 +20,24 @@ When flowing horizontally, be aware of height, you'll want to slightly elevate t
 * Vinyl tubing
 * Hose connectors (see 3d files)
 * Aeration pump
-* Fluid pump (immersible) 
+* Fluid pump (immersible) x2 (one to purge system)
 * Nutrient solution (I've been using General Hydroponics Flora Series)
 * Hydroponic Expanded clay pebbles or other substrate of your choice
 * Hydroponic baskets (to hold the pebbles and plants)
 * LED Grow lights (I chose yellow/white color ones for aesthetics)
 * Marine adhesive for waterproofing and securing the connectors
+
+#### Control system materials
+* Arduino MKR Wifi 1010 (you can also use a ESP8266). Network connectivity is recommended for NTP and telemetry
+* 4 channel relay board with opto-isolator drivers (if you're using a 3.3v microcontroller you'll use separate trigger (3.3v) and coil (5v) voltages. You can pull the 5v supply from the Arduino's pin if you're powering it via a USB supply.
+* 4 120v outlets (or a power-strip you can modify)
+* PH meter for PH feature
+* PH control system (TODO)
+
+
 ### Steps
+
+#### Overview
 1. Print connectors (optional)
 1. Drill or melt holes in containers (for the hose connectors) and lids (for the plant baskets). You'll want about 6-8cm clearance between baskets, depending on basket size and the plants you intend to grow.
 1. Insert baskets into holes
@@ -34,9 +45,20 @@ When flowing horizontally, be aware of height, you'll want to slightly elevate t
 1. Arrange containers as needed
 1. For containers that drain vertically (down), you'll want to cut a bit of tubing to put on the inside of the container to ensure the fluid level is just touching the bottom of the baskets
 1. Hook up the tubing
+1. Set up lights and plug everything in (make sure that each device - pump, lights, air pump - are plugged into their appropriate outlet) 
 1. Place pump in reservoir, connect, fill reservoir with water and test. Depending on your setup, you'll want to adjust the pump runtime per cycle (`PUMP_PULSE_LENGTH`) in `src/constants_and_pins.h` 
 1. Transplant plants into baskets, covering with washed clay pebbles. 
 1. Follow nutrient manufacturer's guides
+
+#### Control system
+1. Select 4 appropriate digital I/O pins for the relay board and connect 
+1. Make sure if using a 3.3 v board, the jumper that bridges signal and coil voltages on the relay control board is removed. You'll supply 5v separately. 
+1. Connect ground
+1. Connect 5v to relay coil input VCC
+1. Load up Arduino IDE and Modify `constants_and_pins.h` with the pins chosen 
+1. Flash and test. 
+1. Wire up outlets to the relay board. I recommend testing each outlet against the controller with a continuity tester before supplying voltage
+
 
 ## Repository Structure
 ### 3d files
